@@ -1,10 +1,10 @@
-namespace PaymentContext.Tests;
+// namespace PaymentContext.Tests;
 
-[TestClass]
-public class UnitTest1
-{
-    [TestMethod]
-    public void TestMethod1()
-    {
-    }
-}
+// [TestClass]
+// public class UnitTest1
+// {
+//     [TestMethod]
+//     public void TestMethod1()
+//     {
+//     }
+// }
