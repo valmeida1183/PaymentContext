@@ -1,3 +1,4 @@
+using Flunt.Validations;
 using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Entities;
 
@@ -25,18 +26,34 @@ public class Student : Entity
         Document = document;
         Email = email;
         _subscriptions = new List<Subscription>();
+
+        // Está agrupando as notificações de name, document e email, caso elas existam nas notifications de student
+        AddNotifications(name, document, email);
     }
 
     public void AddSubscription(Subscription subscription)
     {
         // Se já tiver assinatura ativa, cancela
-
-        // Cancela todas as outras assinaturas e coloca esta como principal
+        var hasSubscriptionActive = false;
         foreach (var sub in Subscriptions)
         {
-            sub.Inactivate();
+            if (sub.Active)
+            {
+                hasSubscriptionActive = true;
+            }
         }
 
-        _subscriptions.Add(subscription);
+        AddNotifications(new Contract<Student>()
+            .Requires()
+            .IsFalse(hasSubscriptionActive, "Student.Subscriptions", "Você já tem uma assinatura ativa")
+        );
+
+        // Cancela todas as outras assinaturas e coloca esta como principal
+        // foreach (var sub in Subscriptions)
+        // {
+        //     sub.Inactivate();
+        // }
+
+        // _subscriptions.Add(subscription);
     }
 }
