@@ -43,9 +43,12 @@ public class Student : Entity
             }
         }
 
+        _subscriptions.Add(subscription);
+
         AddNotifications(new Contract<Student>()
             .Requires()
             .IsFalse(hasSubscriptionActive, "Student.Subscriptions", "Você já tem uma assinatura ativa")
+            .IsGreaterThan(subscription.Payments.Count, 0, "Student.Subscription.Payments", "Esta assinatura não possuí pagamentos")
         );
 
         // Cancela todas as outras assinaturas e coloca esta como principal
