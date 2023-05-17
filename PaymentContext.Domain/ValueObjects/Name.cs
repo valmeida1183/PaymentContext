@@ -21,4 +21,9 @@ public class Name : ValueObject
             .IsLowerOrEqualsThan(LastName, 40, "Name.LastName", "Sobrenome deve conter até 40 caracteres")
         );
     }
+
+    public string FullName()
+    {
+        return $"{FirstName} {LastName}";
+    }
 }
